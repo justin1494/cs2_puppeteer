@@ -1,14 +1,10 @@
 {
   "name": "puppeteer",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-  },
-  "author": "",
-  "license": "ISC",
+  "repository": "https://github.com/justin1494/cs2_puppeteer.git",
+  "author": "justin1494 <m.jaskolowski1994@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.19.2"
   }
