@@ -1,5 +1,6 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,7 +44,7 @@ async function waitForMatchesToLoad(page) {
 async function loginToLeetify() {
   let browser;
   try {
-    browser = await puppeteer.launch();
+    browser = await getBrowser();
     const page = await browser.newPage();
 
     // Navigate to the Leetify login page
