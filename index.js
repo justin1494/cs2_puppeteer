@@ -43,7 +43,7 @@ async function waitForMatchesToLoad(page) {
 async function loginToLeetify() {
   let browser;
   try {
-    browser = await getBrowser();
+    browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // Navigate to the Leetify login page
