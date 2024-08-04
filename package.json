@@ -6,6 +6,7 @@
   "author": "justin1494 <m.jaskolowski1994@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "puppeteer": "^22.15.0"
   }
 }
