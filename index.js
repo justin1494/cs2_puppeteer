@@ -8,29 +8,6 @@ const port = process.env.PORT || 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-const getBrowser = async () => {
-  if (process.env.NODE_ENV === "production") {
-    // For Render.com or other Linux-based environments
-    return puppeteer.launch({
-      headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--single-process",
-      ],
-      executablePath:
-        process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome",
-    });
-  } else {
-    // For local development (Mac or other environments)
-    return puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-  }
-};
-
 async function waitForMatchesToLoad(page) {
   await page.waitForFunction(
     () => {
@@ -42,20 +19,19 @@ async function waitForMatchesToLoad(page) {
 }
 
 async function loginToLeetify() {
-  let browser;
+  const browser = await puppeteer.launch({
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+  });
   try {
-    const browser = await puppeteer.launch({
-      args: [
-        "--disable-setuid-sandbox",
-        "--no-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
-    });
     const page = await browser.newPage();
 
     // Navigate to the Leetify login page
